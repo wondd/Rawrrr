@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar Rawr</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+html,body{height:100%;}
+
+video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+.card{
+  width:320px;
+  background:rgba(0,0,0,0.75);
+  padding:25px;
+  border-radius:14px;
+  color:#fff;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:15px;
+  color:#22ff6e;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:6px;
+}
+
+.pass-box{position:relative;}
+
+.toggle{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:#00ff99;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.msg{
+  text-align:center;
+  color:#ff8080;
+  margin-top:8px;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop>
+  <source src="bg.mp4" type="video/mp4">
+</video>
+
+<div class="card">
+  <h2>Daftar Rawr</h2>
+
+  <input id="phone" placeholder="Nomor HP">
+  <input id="username" placeholder="Username">
+
+  <div class="pass-box">
+    <input id="password" type="password" placeholder="Password">
+    <span class="toggle" onclick="togglePass()">👁</span>
+  </div>
+
+  <button onclick="daftar()">DAFTAR</button>
+
+  <div class="msg" id="msg"></div>
+
+  <div style="text-align:center;margin-top:10px;color:#aaa;">
+    Sudah punya akun?
+    <span style="color:#22ff6e;cursor:pointer;"
+      onclick="location.href='login.html'">Login</span>
+  </div>
+</div>
+
+<script>
+/* TOGGLE PASSWORD */
+function togglePass(){
+  password.type = password.type === "password" ? "text" : "password";
+}
+
+/* DAFTAR */
+function daftar(){
+  let user = username.value.trim();
+  let phoneVal = phone.value.trim();
+  let passVal = password.value.trim();
+  let msg = document.getElementById("msg");
+
+  if(!user || !phoneVal || !passVal){
+    msg.textContent = "Semua data wajib diisi";
+    return;
+  }
+
+  localStorage.setItem("akun", JSON.stringify({
+    user:user,
+    phone:phoneVal,
+    pass:passVal
+  }));
+
+  localStorage.setItem("isLoggedIn","true");
+
+  alert("Daftar berhasil! Masuk ke menu...");
+  location.href="menu.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Login Admin Rawrr</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+  <h1>Login Admin</h1>
+
+  <div class="input-group">
+    <input id="telpAdmin" type="tel" placeholder="Nomor Admin" pattern="[0-9]{10,}">
+  </div>
+  <div class="input-group">
+    <input id="passAdmin" type="password" placeholder="Password">
+    <span class="eye" onclick="lihat('passAdmin')">👁️</span>
+  </div>
+
+  <button class="btn-green" onclick="loginAdmin()">Login</button>
+</div>
+
+<script src="auth.js"></script>
+<script>
+function loginAdmin(){
+  const telp = document.getElementById('telpAdmin').value.trim();
+  const pass = document.getElementById('passAdmin').value.trim();
+  const adminNumbers = ["0895623061500","083159427191"];
+
+  if(telp.length<10 || isNaN(telp)){alert("Nomor admin minimal 10 digit & angka");return;}
+  if(pass.length<5){alert("Password minimal 5 karakter");return;}
+
+  if(adminNumbers.includes(telp)){
+    localStorage.setItem("adminLogin",telp);
+    alert("Login berhasil! Selamat datang Admin!");
+    window.location.href="admin-dashboard.html";
+  } else {
+    alert("Nomor ini bukan admin!");
+  }
+}
+
+function lihat(id){
+  const input = document.getElementById(id);
+  input.type = input.type==="password"?"text":"password";
+}
+</script>
+
+</body>
+</html>

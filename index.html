@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rawr Comunitas</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent;}
+body{min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;color:#fff;}
+#bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;pointer-events:none;}
+body::before{content:"";position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:-1;pointer-events:none;}
+
+.card{
+  width:100%;
+  max-width:420px;
+  margin:50px 12px;
+  padding:30px 26px;
+  background:rgba(0,0,0,0.7);
+  border-radius:22px;
+  text-align:center;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  backdrop-filter:blur(4px);
+  position:relative;
+  z-index:2;
+}
+
+.logo{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:0 auto 15px;
+  border:3px solid #22ff6e;
+  box-shadow:0 0 14px rgba(34,255,110,0.6);
+}
+
+h1{
+  font-size:24px;
+  margin-bottom:20px;
+  letter-spacing:1px;
+  color:#22ff6e;
+}
+
+.btn-green{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#22ff6e,#18c964);
+  color:#06140e;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn-green:hover{
+  filter:brightness(1.1);
+  transform:translateY(-1px);
+}
+
+.owner-box{
+  position:fixed;
+  bottom:20px;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  padding:0 20px;
+  z-index:2;
+}
+
+.owner-btn{
+  flex:1;
+  margin:0 5px;
+  padding:10px 0;
+  border-radius:14px;
+  border:1px solid #22ff6e;
+  background:transparent;
+  color:#22ff6e;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.owner-btn:hover{
+  background:rgba(34,255,110,0.12);
+}
+
+/* INTRO POPUP */
+.intro-popup{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:3;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.4);
+}
+
+.intro-box{
+  position:relative;
+  width:350px;
+  padding:30px 25px;
+  border-radius:20px;
+  background:rgba(0,0,0,0.85);
+  border:2px solid #22ff6e;
+  box-shadow:0 0 40px #22ff6e,0 0 70px #0aff44 inset;
+  text-align:center;
+  animation:popupPulse 1.5s infinite alternate;
+}
+
+.intro-box h2{
+  font-size:28px;
+  color:#22ff6e;
+  text-shadow:0 0 10px #22ff6e;
+}
+
+.intro-box p{
+  margin-top:12px;
+  font-size:14px;
+  color:#e0ffe0;
+}
+
+@keyframes popupPulse{
+  0%{transform:scale(1);}
+  100%{transform:scale(1.05);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO -->
+<video autoplay muted loop id="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<!-- BACKSOUND GLOBAL -->
+<audio id="bgMusic" src="backsound.mp3" loop></audio>
+
+<!-- CARD LOGIN / DAFTAR -->
+<div class="card">
+  <img src="logo.jpg" class="logo" alt="Logo">
+  <h1>RAWr Comunitas</h1>
+  <button class="btn-green" onclick="goLogin()">LOGIN</button>
+  <button class="btn-green" onclick="goDaftar()">DAFTAR</button>
+</div>
+
+<!-- OWNER -->
+<div class="owner-box">
+  <button class="owner-btn" onclick="window.open('https://wa.me/6283159427191','_blank')">♕ OWNER 1</button>
+  <button class="owner-btn" onclick="window.open('https://wa.me/62895623061500','_blank')">♕ OWNER 2</button>
+</div>
+
+<!-- INTRO -->
+<div class="intro-popup" id="intro">
+  <div class="intro-box">
+    <h2>RAWr Comunitas</h2>
+    <p>Welcome • Stay Solid • Stay Together</p>
+    <audio autoplay>
+      <source src="intro-sound.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+/* CEK LOGIN */
+if(localStorage.getItem("isLoggedIn") === "true"){
+  window.location.href = "menu.html"; // langsung ke menu jika sudah login
+}
+
+/* HILANGKAN INTRO */
+setTimeout(()=>{
+  document.getElementById("intro").style.display="none";
+},3000);
+
+/* BACKSOUND CONTROL */
+const music = document.getElementById("bgMusic");
+music.volume = 0.5;
+
+// autoplay workaround
+document.addEventListener('click',()=>{
+  if(music.paused){music.play();}
+},{once:true});
+
+/* LOGIN / DAFTAR */
+function startMusic(){
+  localStorage.setItem("bgMusic","on");
+  music.play().catch(()=>{});
+}
+
+function goLogin(){
+  startMusic();
+  location.href="login.html";
+}
+
+function goDaftar(){
+  startMusic();
+  location.href="daftar.html";
+}
+</script>
+<!-- BACKSOUND GLOBAL -->
+<audio id="bgMusic" src="backsound.mp3" loop autoplay></audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+music.volume = 0.5;
+
+// AUTOPLAY LANGSUNG
+window.addEventListener("load", () => {
+  music.play().catch(() => {
+    // fallback kalau browser blok autoplay
+    console.log("Autoplay diblokir, klik tombol untuk memulai musik");
+  });
+});
+</script>
+</body>
+</html>

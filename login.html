@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Rawr</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+html,body{height:100%;}
+
+video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+.card{
+  width:320px;
+  background:rgba(0,0,0,0.75);
+  padding:25px;
+  border-radius:14px;
+  color:#fff;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:15px;
+  color:#22ff6e;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:6px;
+}
+
+.pass-box{position:relative;}
+
+.toggle{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:#00ff99;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.msg{
+  text-align:center;
+  color:#ff8080;
+  margin-top:8px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop>
+  <source src="bg.mp4" type="video/mp4">
+</video>
+
+<!-- 🎵 BACKSOUND -->
+<audio id="bgMusic" src="backsound.mp3" loop></audio>
+
+<div class="card">
+  <h2>Login Rawr</h2>
+
+  <input id="login" placeholder="Username / Nomor HP">
+
+  <div class="pass-box">
+    <input id="password" type="password" placeholder="Password">
+    <span class="toggle" onclick="togglePass()">👁</span>
+  </div>
+
+  <button onclick="loginAkun()">LOGIN</button>
+
+  <div class="msg" id="msg"></div>
+
+  <div style="text-align:center;margin-top:10px;color:#aaa;">
+    Belum punya akun?
+    <span style="color:#22ff6e;cursor:pointer;" onclick="location.href='daftar.html'">
+      Daftar
+    </span>
+  </div>
+</div>
+
+<script>
+const music = document.getElementById("bgMusic");
+music.volume = 0.5;
+
+/* auto play setelah interaksi */
+document.body.addEventListener("click",()=>{
+  if(localStorage.getItem("bgMusic")==="on"){
+    music.play();
+  }
+},{once:true});
+
+/* lanjutkan musik */
+if(localStorage.getItem("bgMusic")==="on"){
+  music.play().catch(()=>{});
+}
+
+function togglePass(){
+  password.type =
+    password.type === "password" ? "text" : "password";
+}
+
+/* auto login */
+window.onload = function(){
+  if(localStorage.getItem("isLoggedIn")==="true"){
+    location.href="menu.html";
+  }
+}
+
+function loginAkun(){
+  let masuk = login.value.trim();
+  let passVal = password.value.trim();
+  let msg = document.getElementById("msg");
+
+  let akun = JSON.parse(localStorage.getItem("akun"));
+
+  if(!akun){
+    msg.textContent = "Akun belum terdaftar";
+    return;
+  }
+
+  if(
+    (masuk === akun.user || masuk === akun.phone) &&
+    passVal === akun.pass
+  ){
+    localStorage.setItem("isLoggedIn","true");
+    localStorage.setItem("bgMusic","on");
+
+    music.play();
+    location.href="menu.html";
+  }else{
+    msg.textContent = "Username / Password salah";
+  }
+}
+</script>
+
+</body>
+</html>

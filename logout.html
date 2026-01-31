@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Logout Rawrr</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background: linear-gradient(270deg,#0f2027,#203a43,#2c5364);
+  background-size:600% 600%;
+  animation: gradientBG 15s ease infinite;
+  font-family:'Poppins', sans-serif;
+  color:white;
+  margin:0;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.card{
+  background: rgba(0,0,0,0.7);
+  padding:30px 25px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
+  border:2px solid #22ff6e;
+  animation:fadeIn 0.8s ease forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+.card h1{
+  font-size:24px;
+  color:#22ff6e;
+  text-shadow:0 0 8px #22ff6e, 0 0 15px #16a34a;
+  margin-bottom:20px;
+}
+.card p{
+  font-size:16px;
+  margin-bottom:25px;
+  color:white;
+}
+.btn-green{
+  padding:12px 20px;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:16px;
+  color:white;
+  border:none;
+  cursor:pointer;
+  background: linear-gradient(45deg,#22ff6e,#16a34a);
+  box-shadow:0 4px 0 #15803d,0 0 20px #22ff6e,0 0 40px #16a34a;
+  transition:0.3s;
+}
+.btn-green:hover{
+  transform:scale(1.05);
+  box-shadow:0 4px 0 #15803d,0 0 25px #22ff6e,0 0 50px #16a34a;
+}
+.btn-green:active{
+  transform:scale(0.97);
+  box-shadow:0 2px 0 #15803d,0 0 15px #22ff6e,0 0 30px #16a34a;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>✅ Logout Berhasil!</h1>
+  <p>Kamu telah keluar dari akun. Klik tombol di bawah untuk kembali ke halaman login.</p>
+  <button class="btn-green" onclick="kembaliLogin()">Kembali ke Login</button>
+</div>
+
+<script>
+// Hapus sesi login
+localStorage.removeItem("currentUser");
+localStorage.removeItem("adminLogin");
+
+// Redirect
+function kembaliLogin(){
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
